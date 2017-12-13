@@ -1,5 +1,8 @@
 # foodtruck
 webapp with R - Multivariate statistics for a foodtruck
+
+![Alt text](foodtruck/exemple)
+
 # With docker
 - Ruild docker image
 
