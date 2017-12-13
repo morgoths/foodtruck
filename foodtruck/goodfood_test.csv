@@ -1,0 +1,4 @@
+"day";"week_day";"max_temp";"min_temp";"rainfall";"wind";"location";"passerby";"revenue"
+"92";2016-12-19;"Monday";16.1;8.4;0;22;"2";255;25.22
+"93";2016-12-20;"Tuesday";18.7;8.1;0;30;"3";253;9.65
+"94";2016-12-21;"Wednesday";20.6;2.4;0;7;"2";231;18.78
