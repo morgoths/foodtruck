@@ -510,6 +510,7 @@
     })
     
     output$test <- renderPrint({
+      require(MASS)
       data_test <- read.csv(file="goodfood_test.csv",sep=";")
       data_test$week_day <- factor(data_test$week_day, levels = c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday","Saturday", "Sunday"))
 
