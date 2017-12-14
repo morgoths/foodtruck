@@ -520,27 +520,32 @@
       df2 <- data.frame(week_day = data_test[[2,2]], location = data_test[[2,7]], rainfall = data_test[[2,5]], wind = data_test[[2,6]], max_temp = data_test[[2,3]], min_temp = data_test[[2,4]], passerby = data_test[[2,8]])
       df3 <- data.frame(week_day = data_test[[3,2]], location = data_test[[3,7]], rainfall = data_test[[3,5]], wind = data_test[[3,6]], max_temp = data_test[[3,3]], min_temp = data_test[[3,4]], passerby = data_test[[3,8]])
       
-      fit_lm_b <- lm(BlueLake ~ week_day + location + I(max_temp^2) + I(max_temp^3) + I(min_temp^2) +
-                                I(min_temp^3) + I(rainfall^2) + I(rainfall^3) + I(passerby^2) + I(passerby^3) + I(wind^2) + I(wind^3), data=data)
-      fit_lm_e <- lm(Earth ~ week_day + location + I(max_temp^2) + I(max_temp^3) + I(min_temp^2) +
-                                I(min_temp^3) + I(rainfall^2) + I(rainfall^3) + I(passerby^2) + I(passerby^3) + I(wind^2) + I(wind^3), data=data)
-      fit_lm_s <- lm(Surprise ~ week_day + location + I(max_temp^2) + I(max_temp^3) + I(min_temp^2) +
-                                I(min_temp^3) + I(rainfall^2) + I(rainfall^3) + I(passerby^2) + I(passerby^3) + I(wind^2) + I(wind^3), data=data)
+      fit_lm_b <- lm(BlueLake ~ location + I(min_temp^2) + I(min_temp^3) + I(wind^2), data=data)
+      fit_lm_e <- lm(Earth ~ location + poly(max_temp,3) + poly(min_temp,3), data=data)
+      fit_lm_s <- lm(Surprise ~ week_day + location + poly(max_temp,3) + poly(min_temp, 3) + poly(wind,3), data=data)
 
+      fit_lm_sum <- lm(sumSoldes ~ location + I(max_temp^2) + I(max_temp^3) + I(min_temp^2) +    I(min_temp^3) + I(passerby^2) + (passerby^3) + I(wind^2), data=data)
+      
       print("data")
       print(df);print(df2);print(df3)
       
-      p1b <- predict(stepAIC(fit_lm_b, trace=FALSE), newdata = df, interval = "predict", level = 0.95)
-      p2b <- predict(stepAIC(fit_lm_b, trace=FALSE), newdata = df2, interval = "predict", level = 0.95)
-      p3b <- predict(stepAIC(fit_lm_b, trace=FALSE), newdata = df3, interval = "predict", level = 0.95)
+      p1b <- predict(fit_lm_b, newdata = df, interval = "predict", level = 0.95)
+      p2b <- predict(fit_lm_b, newdata = df2, interval = "predict", level = 0.95)
+      p3b <- predict(fit_lm_b, newdata = df3, interval = "predict", level = 0.95)
       
-      p1e <- predict(stepAIC(fit_lm_e, trace=FALSE), newdata = df, interval = "predict", level = 0.95)
-      p2e <- predict(stepAIC(fit_lm_e, trace=FALSE), newdata = df2, interval = "predict", level = 0.95)
-      p3e <- predict(stepAIC(fit_lm_e, trace=FALSE), newdata = df3, interval = "predict", level = 0.95)
+      p1e <- predict(fit_lm_e, newdata = df, interval = "predict", level = 0.95)
+      p2e <- predict(fit_lm_e, newdata = df2, interval = "predict", level = 0.95)
+      p3e <- predict(fit_lm_e, newdata = df3, interval = "predict", level = 0.95)
       
-      p1s <- predict(stepAIC(fit_lm_s, trace=FALSE), newdata = df, interval = "predict", level = 0.95)
-      p2s <- predict(stepAIC(fit_lm_s, trace=FALSE), newdata = df2, interval = "predict", level = 0.95)
-      p3s <- predict(stepAIC(fit_lm_s, trace=FALSE), newdata = df3, interval = "predict", level = 0.95)
+      p1s <- predict(fit_lm_s, newdata = df, interval = "predict", level = 0.95)
+      p2s <- predict(fit_lm_s, newdata = df2, interval = "predict", level = 0.95)
+      p3s <- predict(fit_lm_s, newdata = df3, interval = "predict", level = 0.95)
+      
+      p1sum <- predict(fit_lm_sum, newdata = df, interval = "predict", level = 0.95)
+      p2sum <- predict(fit_lm_sum, newdata = df2, interval = "predict", level = 0.95)
+      p3sum <- predict(fit_lm_sum, newdata = df3, interval = "predict", level = 0.95)
+      
+      
       
       print("Prediction Bluelake")
       print(p1b);print(p2b);print(p3b);
@@ -550,6 +555,9 @@
       
       print("Prediction surprise")
       print(p1s);print(p2s);print(p3s);
+      
+      print("Prediction all menus")
+      print(p1sum);print(p2sum);print(p3sum);
       
     })
     
